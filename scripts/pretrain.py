@@ -138,13 +138,13 @@ def main(config: DictConfig):
         loss_fn = torch.nn.L1Loss() #torch.nn.MSELoss()
 
         trainer = RobotTrainer(
-            model = model,
+            model = model, #模型
             optimizer = optimizer, 
             scheduler = scheduler,
-            train_dataset = train_dataset,
+            train_dataset = train_dataset,#训练数据集
             val_dataset = val_dataset,
             collate_fn=collate_fn, 
-            loss_fn = loss_fn,
+            loss_fn = loss_fn,#损失函数
             model_save_dir = experiment_folder,
             logger = logger,
             config=config
