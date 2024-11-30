@@ -445,7 +445,7 @@ class MultiGPUTrainer:
     def train_step(self,batch):
         raise NotImplementedError
 
-
+""""继承Trainer里面的self属性"""
 class RobotTrainer(Trainer):
 
     def train_step(self,batch):
