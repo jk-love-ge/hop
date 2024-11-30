@@ -22,10 +22,11 @@ import numpy as np
 from torch.optim.lr_scheduler import CosineAnnealingLR 
 import imageio
 
+"""
+hydra是一个配置文件装饰，能够灵活加载对应路径的配置文件。运行脚本的时候也能灵活重新赋值，如pretrain.sh文件中一样。
+"""
 @hydra.main(config_name='config', config_path='../cfg/')
-def main(config: DictConfig):
-
-
+def main(config: DictConfig): 
     device = config.pretrain.device  
     config.seed = set_seed(config.seed)
 
@@ -66,7 +67,7 @@ def main(config: DictConfig):
         logger = Logger(output_dif, summary_writer=wandb_logger)
 
         cprint('Start Building the Environment', 'green', attrs=['bold'])
-    
+    """初始化模拟器环境"""
         env = isaacgym_task_map[config.task_name](
             cfg=omegaconf_to_dict(config.task),
             pretrain_cfg=omegaconf_to_dict(config.pretrain),
@@ -77,7 +78,7 @@ def main(config: DictConfig):
             virtual_screen_capture=config.capture_video,
             force_render=config.force_render
         )
-
+     """测试时加载权重"""
         model.load_state_dict(torch.load(config.pretrain.checkpoint,map_location=device))
         
         cprint(f"Model loaded from {config.pretrain.checkpoint}", color='green', attrs=['bold'])
@@ -86,7 +87,7 @@ def main(config: DictConfig):
 
         return 
 
-    else:
+    else: """训练情况下"""
 
         if config.pretrain.wandb_activate:
             wandb_logger = wandb.init(project=config.wandb_project, name=config.wandb_name,
