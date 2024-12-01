@@ -490,7 +490,7 @@ class RobotTrainer(Trainer):
                 proprio, object_pc, actions, timesteps, attention_mask=attention_mask,
             )
         
-        action_preds = pred_dict["action"]
+        action_preds = pred_dict["action"] """"把动作取出来"""
 
 
 
